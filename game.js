@@ -1,7 +1,7 @@
 // const axios = require("axios").default;
 
 const play = document.getElementById("play"); //This is the "Play Simone" button
-const rounds = document.getElementById("rounds").value; //This is the number of rounds enterd by the user
+const rounds = document.getElementById("rounds"); //This is the number of rounds enterd by the user
 const status = document.getElementById("status");
 const redSq = document.getElementById("redSq");
 const blueSq = document.getElementById("blueSq");
@@ -13,104 +13,111 @@ const blueSound = new Audio("sounds/blue.wav");
 const greenSound = new Audio("sounds/green.wav");
 const yellowSound = new Audio("sounds/yellow.wav");
 
+var numRounds;
+var input;
+
+rounds.addEventListener("input", () => {
+  numRounds = rounds.value;
+});
+
 play.addEventListener("click", async () => {
   startSequence();
   redSq.addEventListener("mouseover", () => {
-    redSq.style.border = "solid #eeeeee .5px";
+    redSq.classList.toggle("hover");
   });
   redSq.addEventListener("mouseout", () => {
-    redSq.style.border = "none";
-    redSq.style.backgroundColor = "#ff0000";
+    redSq.classList.toggle("hover");
   });
   blueSq.addEventListener("mouseover", () => {
-    blueSq.style.border = "solid #eeeeee .5px";
+    blueSq.classList.toggle("hover");
   });
   blueSq.addEventListener("mouseout", () => {
-    blueSq.style.border = "none";
-    blueSq.style.backgroundColor = "#0000bb";
+    blueSq.classList.toggle("hover");
   });
   greenSq.addEventListener("mouseover", () => {
-    greenSq.style.border = "solid #eeeeee .5px";
+    greenSq.classList.toggle("hover");
   });
   greenSq.addEventListener("mouseout", () => {
-    greenSq.style.border = "none";
-    greenSq.style.backgroundColor = "forestgreen";
+    greenSq.classList.toggle("hover");
   });
   yellowSq.addEventListener("mouseover", () => {
-    yellowSq.style.border = "solid #eeeeee .5px";
+    yellowSq.classList.toggle("hover");
   });
   yellowSq.addEventListener("mouseout", () => {
-    yellowSq.style.border = "none";
-    yellowSq.style.backgroundColor = "goldenrod";
+    yellowSq.classList.toggle("hover");
   });
   redSq.addEventListener("mousedown", async () => {
-    redSq.style.backgroundColor = "hotpink";
+    redSq.classList.toggle("lightred");
   });
   redSq.addEventListener("mouseup", async () => {
-    redSq.style.backgroundColor = "#ff0000";
+    redSq.classList.toggle("lightred");
   });
   blueSq.addEventListener("mousedown", async () => {
-    blueSq.style.backgroundColor = "lightblue";
+    blueSq.classList.toggle("lightblue");
   });
   blueSq.addEventListener("mouseup", async () => {
-    blueSq.style.backgroundColor = "#0000bb";
+    blueSq.classList.toggle("lightblue");
   });
   greenSq.addEventListener("mousedown", async () => {
-    greenSq.style.backgroundColor = "lightgreen";
+    greenSq.classList.toggle("lightgreen");
   });
   greenSq.addEventListener("mouseup", async () => {
-    greenSq.style.backgroundColor = "forestgreen";
+    greenSq.classList.toggle("lightgreen");
   });
   yellowSq.addEventListener("mousedown", async () => {
-    yellowSq.style.backgroundColor = "yellow";
+    yellowSq.classList.toggle("lightyellow");
   });
   yellowSq.addEventListener("mouseup", async () => {
-    yellowSq.style.backgroundColor = "goldenrod";
+    yellowSq.classList.toggle("lightyellow");
   });
 });
 
 const startSeq = ["R", "Y", "B", "G", "R", "Y", "B", "G", "R", "Y", "B", "G"];
-const gameSeq = ["R", "B", "G", "Y"];
+const gameSeq = ["B", "B", "G", "Y"];
 
 async function startSequence() {
   for (var i = 0; i < startSeq.length; i++) {
     if (startSeq[i] == "R") {
       redSound.play();
-      redSq.style.backgroundColor = "hotpink";
+      redSq.classList.toggle("lightred");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((redSq.style.backgroundColor = "#ff0000"));
+          resolve();
         }, 120)
       );
+      redSq.classList.toggle("lightred");
     } else if (startSeq[i] == "B") {
       blueSound.play();
-      blueSq.style.backgroundColor = "lightblue";
+      blueSq.classList.toggle("lightblue");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((blueSq.style.backgroundColor = "#0000bb"));
+          resolve();
         }, 120)
       );
+      blueSq.classList.toggle("lightblue");
     } else if (startSeq[i] == "G") {
       greenSound.play();
-      greenSq.style.backgroundColor = "lightgreen";
+      greenSq.classList.toggle("lightgreen");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((greenSq.style.backgroundColor = "forestgreen"));
+          resolve();
         }, 120)
       );
+      greenSq.classList.toggle("lightgreen");
     } else if (startSeq[i] == "Y") {
       yellowSound.play();
-      yellowSq.style.backgroundColor = "yellow";
+      yellowSq.classList.toggle("lightyellow");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((yellowSq.style.backgroundColor = "goldenrod"));
+          resolve();
         }, 120)
       );
+      yellowSq.classList.toggle("lightyellow");
     }
   }
 }
 
-async function playGame() {
+async function playGame(numRounds) {
   var sequence = new Array();
   var count = 0;
 
@@ -119,36 +126,81 @@ async function playGame() {
   for (var i = 0; i < sequence.length; i++) {
     if (gameSeq[i] == "R") {
       redSound.play();
-      redSq.style.backgroundColor = "hotpink";
+      redSq.classList.toggle("lightred");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((redSq.style.backgroundColor = "#ff0000"));
-        }, 200)
+          resolve();
+        }, 120)
       );
-    } else if (startSeq[i] == "B") {
+      redSq.classList.toggle("lightred");
+    } else if (gameSeq[i] == "B") {
       blueSound.play();
-      blueSq.style.backgroundColor = "lightblue";
+      blueSq.classList.toggle("lightblue");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((blueSq.style.backgroundColor = "#0000bb"));
-        }, 200)
+          resolve();
+        }, 120)
       );
-    } else if (startSeq[i] == "G") {
+      blueSq.classList.toggle("lightblue");
+    } else if (gameSeq[i] == "G") {
       greenSound.play();
-      greenSq.style.backgroundColor = "lightgreen";
+      greenSq.classList.toggle("lightgreen");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((greenSq.style.backgroundColor = "forestgreen"));
-        }, 200)
+          resolve();
+        }, 120)
       );
-    } else if (startSeq[i] == "Y") {
+      greenSq.classList.toggle("lightgreen");
+    } else if (gameSeq[i] == "Y") {
       yellowSound.play();
-      yellowSq.style.backgroundColor = "yellow";
+      yellowSq.classList.toggle("lightyellow");
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve((yellowSq.style.backgroundColor = "goldenrod"));
-        }, 200)
+          resolve();
+        }, 120)
       );
+      yellowSq.classList.toggle("lightyellow");
     }
   }
+
+  var cont = await userGuess(sequence);
+
+  if (sequence.length == gameSeq.length && cont == true) {
+    //they win!
+  } else if (cont == true) {
+    //they go again
+  } else {
+    //they lose
+  }
+}
+
+async function userGuess(sequence) {
+  await new Promise((resolve) => {
+    var guessesLeft = sequence.length;
+    for (var i = 0; i < guessesLeft; i++) {
+      if (guessesLeft != sequence.length) {
+        status.innerHTML = `So far so good! ${guessesLeft} more to go!`;
+      }
+      redSq.addEventListener("click", () => {
+        input = "R";
+        resolve(input);
+      });
+      blueSq.addEventListener("click", () => {
+        input = "B";
+        resolve(input);
+      });
+      greenSq.addEventListener("click", () => {
+        input = "G";
+        resolve(input);
+      });
+      yellowSq.addEventListener("click", () => {
+        input = "Y";
+        resolve(input);
+      });
+    }
+  });
+  if (input == sequence[i]) {
+    return true;
+  }
+  return false;
 }
